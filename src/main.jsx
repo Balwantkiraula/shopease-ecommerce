@@ -18,8 +18,9 @@ createRoot(document.getElementById('root')).render(
     <StoreProvider>
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<App />} />
-          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/category/:slug" element={<Category />} />
           <Route path="/search" element={<Search />} />
           <Route path="/cart" element={<Cart />} />
