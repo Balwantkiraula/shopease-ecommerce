@@ -433,7 +433,11 @@ function Home() {
               ) : (
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                   {searchResults.map((p) => (
-                    <div key={p.id} className="group bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow">
+                    <div
+                      key={p.id}
+                      className="group bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow cursor-pointer"
+                      onClick={() => navigate(`/product/${p.id}`, { state: { product: { ...p, source: 'dummyjson' } } })}
+                    >
                       <div className="aspect-[3/2] bg-gray-100 flex items-center justify-center">
                         <img src={p.thumbnail || (Array.isArray(p.images) ? p.images[0] : p.image)} alt={p.title} className="max-h-full w-full object-contain object-center" />
                       </div>
@@ -442,7 +446,15 @@ function Home() {
                         <div className="mt-1 font-medium text-gray-900 line-clamp-1">{p.title || p.name}</div>
                         <div className="mt-2 flex items-center justify-between">
                           <div className="text-blue-600 font-semibold">${Number(p.price).toFixed(2)}</div>
-                          <button onClick={() => addToCart(p)} className="text-sm px-2 py-1 rounded bg-blue-600 text-white hover:bg-blue-700">Add</button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              addToCart(p)
+                            }}
+                            className="text-sm px-2 py-1 rounded bg-blue-600 text-white hover:bg-blue-700"
+                          >
+                            Add
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -472,7 +484,11 @@ function Home() {
               ) : (
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                   {filteredProducts.map((p) => (
-                    <div key={p.id} className="group bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow">
+                    <div
+                      key={p.id}
+                      className="group bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow cursor-pointer"
+                      onClick={() => navigate(`/product/${p.id}`, { state: { product: { ...p, source: 'fakestore' } } })}
+                    >
                       <div className="aspect-[3/2] bg-gray-100 flex items-center justify-center">
                         <img src={p.image} alt={p.title} className="max-h-full w-full object-contain object-center" />
                       </div>
@@ -481,7 +497,15 @@ function Home() {
                         <div className="mt-1 font-medium text-gray-900 line-clamp-1">{p.title}</div>
                         <div className="mt-2 flex items-center justify-between">
                           <div className="text-blue-600 font-semibold">${Number(p.price).toFixed(2)}</div>
-                          <button onClick={() => addToCart(p)} className="text-sm px-2 py-1 rounded bg-blue-600 text-white hover:bg-blue-700">Add</button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              addToCart(p)
+                            }}
+                            className="text-sm px-2 py-1 rounded bg-blue-600 text-white hover:bg-blue-700"
+                          >
+                            Add
+                          </button>
                         </div>
                       </div>
                     </div>

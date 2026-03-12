@@ -163,7 +163,11 @@ function Search() {
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {results.map((p) => (
-              <div key={p.id} className="group bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow">
+              <div
+                key={p.id}
+                className="group bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow cursor-pointer"
+                onClick={() => navigate(`/product/${p.id}`, { state: { product: { ...p, source: 'dummyjson' } } })}
+              >
                 <div className="aspect-[3/2] bg-gray-100">
                   <img src={p.thumbnail || (Array.isArray(p.images) ? p.images[0] : undefined)} alt={p.title} className="h-full w-full object-cover" />
                 </div>
@@ -172,7 +176,15 @@ function Search() {
                   <div className="mt-1 font-medium text-gray-900 line-clamp-1">{p.title}</div>
                   <div className="mt-2 flex items-center justify-between">
                     <div className="text-blue-600 font-semibold">${Number(p.price).toFixed(2)}</div>
-                    <button onClick={() => addToCart(p)} className="text-sm px-2 py-1 rounded bg-blue-600 text-white hover:bg-blue-700">Add</button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        addToCart(p)
+                      }}
+                      className="text-sm px-2 py-1 rounded bg-blue-600 text-white hover:bg-blue-700"
+                    >
+                      Add
+                    </button>
                   </div>
                 </div>
               </div>

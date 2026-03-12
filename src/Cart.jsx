@@ -53,13 +53,21 @@ function Cart() {
     return <Navigate to="/login" replace />
   }
 
+  const goToProduct = (item) => {
+    navigate(`/product/${item.id}`, { state: { product: { ...item, source: item.source || 'fakestore' } } })
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
         <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="h-16 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <button onClick={() => navigate('/')} className="px-2 py-1 rounded border border-gray-300 text-sm hover:bg-gray-50">Home</button>
+              <div className="flex items-center gap-2 shrink-0">
+                <div className="h-8 w-8 rounded-md bg-gradient-to-br from-blue-600 to-indigo-600" />
+                <span className="text-xl font-bold text-gray-900">ShopEase</span>
+              </div>
+              <button onClick={() => navigate('/home')} className="px-2 py-1 rounded border border-gray-300 text-sm hover:bg-gray-50">Home</button>
               <span className="text-xl font-bold text-gray-900">Cart</span>
             </div>
             <div className="flex items-center gap-3">
@@ -86,7 +94,7 @@ function Cart() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="mb-4">
-          <button onClick={() => navigate('/')} className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700">
+          <button onClick={() => navigate('/home')} className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700">
             <span>←</span>
             <span>Back to Home</span>
           </button>
@@ -100,29 +108,36 @@ function Cart() {
         {cartItems.length === 0 ? (
           <div className="text-center py-20">
             <p className="text-gray-600">Your cart is empty.</p>
-            <button onClick={() => navigate('/')} className="mt-4 inline-flex items-center rounded bg-blue-600 text-white px-4 py-2 text-sm font-medium hover:bg-blue-700">Start shopping</button>
+            <button onClick={() => navigate('/home')} className="mt-4 inline-flex items-center rounded bg-blue-600 text-white px-4 py-2 text-sm font-medium hover:bg-blue-700">Start shopping</button>
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 space-y-4">
               {cartItems.map((item) => (
-                <div key={item.id} className="flex gap-4 bg-white border border-gray-200 rounded-lg p-4">
-                  <div className="w-24 h-24 bg-gray-100 rounded overflow-hidden">
-                    <img src={item.thumbnail || item.image || (Array.isArray(item.images) ? item.images[0] : undefined)} alt={item.title || item.name} className="w-full h-full object-cover" />
+                <div
+                  key={item.id}
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => goToProduct(item)}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goToProduct(item) } }}
+                  className="flex gap-4 bg-white border border-gray-200 rounded-lg p-4 cursor-pointer hover:shadow-md transition-shadow"
+                >
+                  <div className="w-24 h-24 bg-gray-100 rounded overflow-hidden flex-shrink-0 flex items-center justify-center">
+                    <img src={item.thumbnail || item.image || (Array.isArray(item.images) ? item.images[0] : undefined)} alt={item.title || item.name} className="w-full h-full object-contain" />
                   </div>
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between gap-4">
-                      <div>
+                      <div className="min-w-0">
                         <div className="font-medium text-gray-900 line-clamp-2">{item.title || item.name}</div>
                         <div className="text-sm text-gray-500 capitalize">{item.category}</div>
                       </div>
-                      <button onClick={() => removeFromCart(item.id)} className="text-sm text-red-600 hover:underline">Remove</button>
+                      <button onClick={(e) => { e.stopPropagation(); removeFromCart(item.id) }} className="text-sm text-red-600 hover:underline flex-shrink-0">Remove</button>
                     </div>
                     <div className="mt-3 flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <button onClick={() => updateQty(item.id, -1)} className="w-7 h-7 rounded border hover:bg-gray-50">-</button>
+                        <button type="button" onClick={(e) => { e.stopPropagation(); updateQty(item.id, -1) }} className="w-7 h-7 rounded border hover:bg-gray-50">-</button>
                         <span className="w-8 text-center">{item.qty || 1}</span>
-                        <button onClick={() => updateQty(item.id, 1)} className="w-7 h-7 rounded border hover:bg-gray-50">+</button>
+                        <button type="button" onClick={(e) => { e.stopPropagation(); updateQty(item.id, 1) }} className="w-7 h-7 rounded border hover:bg-gray-50">+</button>
                       </div>
                       <div className="font-semibold text-gray-900">${(Number(item.price) * (item.qty || 1)).toFixed(2)}</div>
                     </div>

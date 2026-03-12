@@ -106,10 +106,14 @@ function Category() {
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="h-16 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <button onClick={() => navigate('/')} className="px-2 py-1 rounded border border-gray-300 text-sm hover:bg-gray-50">Home</button>
+              <div className="flex items-center gap-2 shrink-0">
+                <div className="h-8 w-8 rounded-md bg-gradient-to-br from-blue-600 to-indigo-600" />
+                <span className="text-xl font-bold text-gray-900">ShopEase</span>
+              </div>
+              <button onClick={() => navigate('/home')} className="px-2 py-1 rounded border border-gray-300 text-sm hover:bg-gray-50">Home</button>
               <span className="text-xl font-bold text-gray-900 capitalize">{slug}</span>
             </div>
             <div className="flex items-center gap-3">
@@ -136,7 +140,7 @@ function Category() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="mb-4">
-          <button onClick={() => navigate('/')} className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700">
+          <button onClick={() => navigate('/home')} className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700">
             <span>←</span>
             <span>Back to Home</span>
           </button>
@@ -169,16 +173,28 @@ function Category() {
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {products.map((p) => (
-              <div key={p.id} className="group bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow">
-                <div className="aspect-[3/2] bg-gray-100">
-                  <img src={p.thumbnail || (Array.isArray(p.images) ? p.images[0] : undefined)} alt={p.title} className="h-full w-full object-cover" />
+              <div
+                key={p.id}
+                className="group bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow cursor-pointer"
+                onClick={() => navigate(`/product/${p.id}`, { state: { product: { ...p, source: 'dummyjson' } } })}
+              >
+                <div className="aspect-[3/2] bg-gray-100 flex items-center justify-center">
+                  <img src={p.thumbnail || (Array.isArray(p.images) ? p.images[0] : p.image)} alt={p.title || p.name} className="max-h-full w-full object-contain object-center" />
                 </div>
                 <div className="p-3">
                   <div className="text-sm text-gray-500 capitalize">{p.category}</div>
-                  <div className="mt-1 font-medium text-gray-900 line-clamp-1">{p.title}</div>
+                  <div className="mt-1 font-medium text-gray-900 line-clamp-1">{p.title || p.name}</div>
                   <div className="mt-2 flex items-center justify-between">
                     <div className="text-blue-600 font-semibold">${Number(p.price).toFixed(2)}</div>
-                    <button onClick={() => addToCart(p)} className="text-sm px-2 py-1 rounded bg-blue-600 text-white hover:bg-blue-700">Add</button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        addToCart(p)
+                      }}
+                      className="text-sm px-2 py-1 rounded bg-blue-600 text-white hover:bg-blue-700"
+                    >
+                      Add
+                    </button>
                   </div>
                 </div>
               </div>

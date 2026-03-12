@@ -10,6 +10,8 @@ import Profile from './Profile.jsx'
 import Address from './Address.jsx'
 import Orders from './Orders.jsx'
 import Support from './Support.jsx'
+import ProductDetail from './ProductDetail.jsx'
+import ProductDetailErrorBoundary from './ProductDetailErrorBoundary.jsx'
 import { StoreProvider } from './context/StoreContext.jsx'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
@@ -21,6 +23,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<App />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/product/:id" element={<ProductDetailErrorBoundary><ProductDetail /></ProductDetailErrorBoundary>} />
           <Route path="/category/:slug" element={<Category />} />
           <Route path="/search" element={<Search />} />
           <Route path="/cart" element={<Cart />} />
