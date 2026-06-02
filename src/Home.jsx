@@ -230,10 +230,14 @@ function Home() {
           <div className="w-full px-4 sm:px-6 lg:px-8">
             <div className="flex flex-wrap items-center gap-3 py-3 sm:py-0 sm:h-16">
               {/* Brand */}
-              <div className="flex items-center gap-2 shrink-0">
-                <div className="h-8 w-8 rounded-md bg-gradient-to-br from-blue-600 to-indigo-600" />
-                <span className="text-xl font-bold text-gray-900">ShopEase</span>
-              </div>
+              <button
+                type="button"
+                onClick={() => navigate('/home')}
+                className="flex items-center shrink-0 focus:outline-none"
+                aria-label="Go to Home"
+              >
+                <img src="/ShopeaseLogo.png" alt="ShopEase" className="h-20 w-20 object-contain" />
+              </button>
               {/* Search */}
               <div className="flex-1 min-w-[200px] w-full sm:w-auto">
                 <div className="relative">

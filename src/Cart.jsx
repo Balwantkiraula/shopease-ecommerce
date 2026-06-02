@@ -63,11 +63,14 @@ function Cart() {
         <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="h-16 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 shrink-0">
-                <div className="h-8 w-8 rounded-md bg-gradient-to-br from-blue-600 to-indigo-600" />
-                <span className="text-xl font-bold text-gray-900">ShopEase</span>
-              </div>
-              <button onClick={() => navigate('/home')} className="px-2 py-1 rounded border border-gray-300 text-sm hover:bg-gray-50">Home</button>
+              <button
+                type="button"
+                onClick={() => navigate('/home')}
+                className="flex items-center shrink-0 focus:outline-none hover:opacity-90 active:scale-95 transition-all duration-200"
+                aria-label="Go to Home"
+              >
+                <img src="/ShopeaseLogo.png" alt="ShopEase" className="h-20 w-20 object-contain" />
+              </button>
               <span className="text-xl font-bold text-gray-900">Cart</span>
             </div>
             <div className="flex items-center gap-3">
@@ -93,12 +96,6 @@ function Cart() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="mb-4">
-          <button onClick={() => navigate('/home')} className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700">
-            <span>←</span>
-            <span>Back to Home</span>
-          </button>
-        </div>
         {error && (
           <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
             <p className="text-red-600 text-sm">{error}</p>

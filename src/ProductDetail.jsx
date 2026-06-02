@@ -129,19 +129,13 @@ function ProductDetail() {
           <div className="h-16 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <button
+                type="button"
                 onClick={() => navigate('/home')}
-                className="inline-flex items-center gap-1.5 text-sm text-gray-700 hover:text-blue-600 border border-gray-300 hover:border-blue-500 rounded-lg px-3 py-2 bg-white hover:bg-gray-50 transition"
-                aria-label="Back to Home"
+                className="flex items-center shrink-0 focus:outline-none"
+                aria-label="Go to Home"
               >
-                <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
-                </svg>
-                <span>Back to Home</span>
+                <img src="/ShopeaseLogo.png" alt="ShopEase" className="h-20 w-20 object-contain" />
               </button>
-              <div className="flex items-center gap-2 shrink-0">
-                <div className="h-8 w-8 rounded-md bg-gradient-to-br from-blue-600 to-indigo-600" />
-                <span className="text-xl font-bold text-gray-900">ShopEase</span>
-              </div>
             </div>
             <button
               onClick={() => navigate('/cart')}
@@ -183,13 +177,7 @@ function ProductDetail() {
           <div className="bg-white border border-gray-200 rounded-xl p-8 text-center">
             <p className="text-gray-700 font-medium">Product not found</p>
             <p className="mt-1 text-sm text-gray-500">{error || 'This product may have been removed or the link is invalid.'}</p>
-            <button
-              type="button"
-              onClick={() => navigate('/home')}
-              className="mt-4 inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-            >
-              ← Back to Home
-            </button>
+
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
